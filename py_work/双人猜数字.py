@@ -1,46 +1,41 @@
-
 from random import randint
 
-first_gamer = input("first_gamer what's your name?")
-second_gamer = input("second_gamer what's your name?")
-first_number = 1
-second_number = 1
-computer = randint(1,100)
-while True:
-    try:
-        first_guess = input(f'{first_gamer} guess number')
-        first_guess = int(first_guess)
+def get_guess(player_name):
+    while True:
+        try:
+            guess = int(input(f'{player_name}, guess a number: '))
+            return guess
+        except ValueError:
+            print('Please enter a valid number.')
 
-        if first_guess == computer:
-            print(f'{first_gamer.title()} is win.')
-            print(f'{first_gamer.title()} guess {first_number} turn.')
+def play_game():
+    first_gamer = input("First gamer, what's your name? ")
+    second_gamer = input("Second gamer, what's your name? ")
+    computer_number = randint(1, 100)
+    
+    first_guess_count = 0
+    second_guess_count = 0
+    
+    while True:
+        first_guess = get_guess(first_gamer)
+        first_guess_count += 1
+        if first_guess == computer_number:
+            print(f'{first_gamer.title()} wins! It took {first_guess_count} attempts.')
             break
-        elif first_guess <= computer:
-            print('low!')
-            first_number = first_number + 1
-        elif first_guess >= computer:
-            print('high!')
-            first_number = first_number + 1
-    except ValueError:
-        print('only number')
-        continue
-
-    try:
-        second_guess = input(f'{second_gamer} guess number')
-        second_guess = int(second_guess)
-
-        if second_guess == computer:
-            print(f'{second_gamer.title()} is win.')
-            print(f'{second_gamer.title()} guess {second_number} turns.')
+        elif first_guess < computer_number:
+            print('Too low!')
+        else:
+            print('Too high!')
+        
+        second_guess = get_guess(second_gamer)
+        second_guess_count += 1
+        if second_guess == computer_number:
+            print(f'{second_gamer.title()} wins! It took {second_guess_count} attempts.')
             break
-        elif second_guess <= computer:
-            print('low!')
-            second_number = second_number + 1
-        elif second_guess >= computer:
-            print('high!')
-            second_number = second_number + 1
-    except ValueError:
-        print('only number')
+        elif second_guess < computer_number:
+            print('Too low!')
+        else:
+            print('Too high!')
 
-
-
+if __name__ == "__main__":
+    play_game()
